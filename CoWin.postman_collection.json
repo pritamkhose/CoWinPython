@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "314166b5-2368-4bc7-8087-b152cccfaf30",
+		"name": "CoWin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cowin API",
+			"item": [
+				{
+					"name": "states",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "hi_IN"
+							}
+						],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/admin/location/states",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"admin",
+								"location",
+								"states"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "districts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/admin/location/districts/21",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"admin",
+								"location",
+								"districts",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calendarByPin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=414005&date=19-05-2021",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"sessions",
+								"public",
+								"calendarByPin"
+							],
+							"query": [
+								{
+									"key": "pincode",
+									"value": "414005"
+								},
+								{
+									"key": "date",
+									"value": "19-05-2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calendarByDistrict",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=391&date=11-05-2021",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"sessions",
+								"public",
+								"calendarByDistrict"
+							],
+							"query": [
+								{
+									"key": "district_id",
+									"value": "391"
+								},
+								{
+									"key": "date",
+									"value": "11-05-2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generateOTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"mobile\":\"9420037410\"}"
+						},
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/auth/public/generateOTP",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"auth",
+								"public",
+								"generateOTP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirmOTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 692112,\r\n    \"txnId\": \"958c23f7-b78c-4cde-8206-67184a819c14\"\r\n}"
+						},
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/auth/public/confirmOTP",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"auth",
+								"public",
+								"confirmOTP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calendarByCenter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByCenter?center_id=561230&date=22-05-2021",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"sessions",
+								"public",
+								"calendarByCenter"
+							],
+							"query": [
+								{
+									"key": "center_id",
+									"value": "561230"
+								},
+								{
+									"key": "date",
+									"value": "22-05-2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByPin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=414005&date=11-05-2021",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"sessions",
+								"public",
+								"findByPin"
+							],
+							"query": [
+								{
+									"key": "pincode",
+									"value": "414005"
+								},
+								{
+									"key": "date",
+									"value": "11-05-2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByDistrict",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "hi_IN"
+							}
+						],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=391&date=25-05-2021",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"sessions",
+								"public",
+								"findByDistrict"
+							],
+							"query": [
+								{
+									"key": "district_id",
+									"value": "391"
+								},
+								{
+									"key": "date",
+									"value": "25-05-2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByLatLong",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cdn-api.co-vin.in/api/v2/appointment/centers/public/findByLatLong?lat=19.09&long=74.74",
+							"protocol": "https",
+							"host": [
+								"cdn-api",
+								"co-vin",
+								"in"
+							],
+							"path": [
+								"api",
+								"v2",
+								"appointment",
+								"centers",
+								"public",
+								"findByLatLong"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "19.09"
+								},
+								{
+									"key": "long",
+									"value": "74.74"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "http://localhost:5000/api/pincode?pincode=414005",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/pincode?pincode=414005",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pincode"
+							],
+							"query": [
+								{
+									"key": "pincode",
+									"value": "414005"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

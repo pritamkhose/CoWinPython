@@ -1,0 +1,11 @@
+Flask
+flask_cors
+gunicorn
+numpy
+pandas
+matplotlib
+requests
+pymongo
+python-dotenv
+simplejson
+bs4

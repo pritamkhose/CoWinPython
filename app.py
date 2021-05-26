@@ -89,19 +89,23 @@ def getFile():
 
 @ app.route('/api/pincode', methods=['GET'])
 def getPincodeAPI():
-    pincode = request.args.get('pincode')
-    if(pincode != None and pincode != ''):
-        pass
-    else:
-        pincode = '414001'
-    date = str(datetime.now().strftime("%d-%m-%Y"))
-    url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=' + \
-        str(pincode) + '&date=' + date
-    page = requests.get(url, HEADERS)
-    return jsonify({'body': page.content, 'headers': str(page.headers), 'req_url': url, 'req_headers': HEADERS}), page.status_code
-
+    try:
+        pincode = request.args.get('pincode')
+        if(pincode != None and pincode != ''):
+            pass
+        else:
+            pincode = '414001'
+        date = str(datetime.now().strftime("%d-%m-%Y"))
+        url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=' + \
+            str(pincode) + '&date=' + date
+        page = requests.get(url, HEADERS)
+        return jsonify({'body': str(page.content), 'headers': str(page.headers), 'req_url': url, 'req_headers': HEADERS}), page.status_code
+    except Exception as e:
+        return jsonify({'time': str(datetime.now().strftime("%c")), 'errorMsg': str(e)}), 500
 
 # Error Handling
+
+
 @ app.errorhandler(404)
 def page_not_found(e):
     data = {'time': str(datetime.now().strftime("%c")), 'errorMsg': str(e)}

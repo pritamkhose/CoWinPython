@@ -40,3 +40,7 @@ You should be able to run this app on your own system via the familiar invocatio
 * [stackoverflow 403](https://stackoverflow.com/questions/67498285/403-response-code-request-blocked-when-using-cowin-setu-apis)
 
 * [APScheduler Example](https://github.com/r3ap3rpy/python/blob/master/flasksched/scheduled.py)
+
+* [Heroku Scheduled Jobs](https://devcenter.heroku.com/articles/clock-processes-python)
+
+* [apscheduler heroku](https://stackoverflow.com/questions/18987784/apscheduler-process-not-working-with-heroku-django-set-up)

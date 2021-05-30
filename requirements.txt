@@ -7,4 +7,4 @@ pymongo
 python-dotenv
 simplejson
 bs4
-APScheduler
+APScheduler==3.0.0

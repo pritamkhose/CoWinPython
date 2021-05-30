@@ -15,7 +15,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 app = Flask(__name__)
 scheduler = BackgroundScheduler({'apscheduler.timezone': 'UTC'})
-schedule = BlockingScheduler({'apscheduler.timezone': 'UTC'})
+schedule = BlockingScheduler()
 
 DEBUG = os.environ.get('DEBUG')
 if(DEBUG != None and DEBUG == "True"):
@@ -130,7 +130,7 @@ def getPincodeJOBTest():
 
 # Scheduler Jobs Function
 @schedule.scheduled_job('interval', minutes=1)
-def timed_pincode_job():
+def timed_job():
     getPincodeJOB()
 
 

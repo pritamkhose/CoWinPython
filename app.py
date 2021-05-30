@@ -6,15 +6,26 @@ import os
 from pathlib import Path
 import json
 import requests
-import numpy as np
 import pandas as pd
+import pymongo
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+from apscheduler.schedulers.background import BackgroundScheduler
+
 app = Flask(__name__)
+scheduler = BackgroundScheduler({'apscheduler.timezone': 'UTC'})
 
 DEBUG = os.environ.get('DEBUG')
 if(DEBUG != None and DEBUG == "True"):
     DEBUG = True
 else:
     DEBUG = False
+
+JOBRUN = os.environ.get('JOBRUN')
+if(JOBRUN != None and JOBRUN == "True"):
+    JOBRUN = True
+else:
+    JOBRUN = False
 
 HEADERS = os.environ.get('HEADERS')
 if(HEADERS == None):
@@ -23,6 +34,9 @@ if(HEADERS == None):
         'Host': 'cdn-api.co-vin.in',
         'Accept-Language': 'hi_IN'
     }
+
+MONGODBNAME = os.environ.get('MONGODB')
+MONGOURL = os.environ.get('MONGOURL')
 
 # Initialize Data
 path = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -99,13 +113,37 @@ def getPincodeAPI():
         url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=' + \
             str(pincode) + '&date=' + date
         page = requests.get(url, HEADERS)
-        return jsonify({'body': str(page.content), 'headers': str(page.headers), 'req_url': url, 'req_headers': HEADERS}), page.status_code
+        res = {'body': json.loads(page.content), 'status': page.status_code, 'headers': str(
+            page.headers), 'req_url': url, 'req_headers': HEADERS}
+        return jsonify(res), 200
     except Exception as e:
         return jsonify({'time': str(datetime.now().strftime("%c")), 'errorMsg': str(e)}), 500
 
+
+# Scheduler Jobs Function
+def getPincodeJOB():
+    pincodeList = ['414001', '414002', '414003', '414004', '414005', '414006']
+    date = str(datetime.now().strftime("%d-%m-%Y"))
+    time = str(datetime.now().strftime("%c"))
+    content = []
+    for pincode in pincodeList:
+        try:
+            url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=' + \
+                str(pincode) + '&date=' + date
+            page = requests.get(url, HEADERS)
+            res = {'body': json.loads(
+                page.content), 'status': page.status_code, 'req_url': url}
+            content.append({'pincode': pincode, 'date': time, 'result': res})
+        except Exception as e:
+            content.append({'pincode': pincode, 'date': time, 'error': str(e)})
+    col = 'Slots'
+    mongoClient = pymongo.MongoClient(MONGOURL)
+    mongoDB = mongoClient[MONGODBNAME][col]
+    data = mongoDB.insert_many(content).inserted_ids
+    print(date, str(data))
+
+
 # Error Handling
-
-
 @ app.errorhandler(404)
 def page_not_found(e):
     data = {'time': str(datetime.now().strftime("%c")), 'errorMsg': str(e)}
@@ -114,4 +152,7 @@ def page_not_found(e):
 
 # Flask server invoke
 if __name__ == '__main__':
+    if(JOBRUN):
+        job = scheduler.add_job(getPincodeJOB, 'interval', minutes=1)
+        scheduler.start()
     app.run(debug=DEBUG, use_reloader=True)

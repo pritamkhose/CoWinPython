@@ -11,9 +11,11 @@ import pymongo
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 app = Flask(__name__)
 scheduler = BackgroundScheduler({'apscheduler.timezone': 'UTC'})
+schedule = BlockingScheduler({'apscheduler.timezone': 'UTC'})
 
 DEBUG = os.environ.get('DEBUG')
 if(DEBUG != None and DEBUG == "True"):
@@ -127,6 +129,14 @@ def getPincodeJOBTest():
 
 
 # Scheduler Jobs Function
+@schedule.scheduled_job('interval', minutes=1)
+def timed_pincode_job():
+    getPincodeJOB()
+
+
+schedule.start()
+
+
 def getPincodeJOB():
     pincodeList = ['414001', '414002', '414003', '414004', '414005', '414006']
     date = str(datetime.now().strftime("%d-%m-%Y"))
@@ -163,7 +173,7 @@ def page_not_found(e):
 
 # Flask server invoke
 if __name__ == '__main__':
-    if(JOBRUN):
-        job = scheduler.add_job(getPincodeJOB, 'interval', minutes=1)
-        scheduler.start()
+    # if(JOBRUN):
+    #     job = scheduler.add_job(getPincodeJOB, 'interval', minutes=1)
+    #     scheduler.start()
     app.run(debug=DEBUG, use_reloader=True)

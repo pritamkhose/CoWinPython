@@ -120,6 +120,12 @@ def getPincodeAPI():
         return jsonify({'time': str(datetime.now().strftime("%c")), 'errorMsg': str(e)}), 500
 
 
+@ app.route('/test', methods=['GET'])
+def getPincodeJOBTest():
+    getPincodeJOB()
+    return jsonify({'msg': 'ok'}), 200
+
+
 # Scheduler Jobs Function
 def getPincodeJOB():
     pincodeList = ['414001', '414002', '414003', '414004', '414005', '414006']

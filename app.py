@@ -125,6 +125,7 @@ def getPincodeJOB():
     pincodeList = ['414001', '414002', '414003', '414004', '414005', '414006']
     date = str(datetime.now().strftime("%d-%m-%Y"))
     time = str(datetime.now().strftime("%c"))
+    print('getPincodeJOB started = ', time)
     content = []
     for pincode in pincodeList:
         try:
@@ -137,10 +138,14 @@ def getPincodeJOB():
         except Exception as e:
             content.append({'pincode': pincode, 'date': time, 'error': str(e)})
     col = 'Slots'
-    mongoClient = pymongo.MongoClient(MONGOURL)
-    mongoDB = mongoClient[MONGODBNAME][col]
-    data = mongoDB.insert_many(content).inserted_ids
-    print(date, str(data))
+    print('getPincodeJOB content = ', content)
+    try:
+        mongoClient = pymongo.MongoClient(MONGOURL)
+        mongoDB = mongoClient[MONGODBNAME][col]
+        data = mongoDB.insert_many(content).inserted_ids
+        print(date, str(data))
+    except Exception as e:
+        print('mongo error', str(e))
 
 
 # Error Handling
